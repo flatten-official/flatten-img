@@ -3,10 +3,12 @@ const jsdom = require('jsdom');
 
 const { JSDOM } = jsdom;
 
+const card = require("./card");
+
 class InsightsRenderer {
 
-  constructor(data) {
-    this.data = data;
+  constructor(config) {
+    this.config = config;
     this.initDom();
     this.drawn = false;
   }
@@ -18,21 +20,31 @@ class InsightsRenderer {
     // Make an SVG Container
     this.container = this.body.append('div').attr('class', 'container')
       .append("svg")
-      .attr("width", 1280)
-      .attr("height", 1024);
-
+      .attr("width", this.config.width)
+      .attr("height", this.config.height)
+      .attr("xmlns", "http://www.w3.org/2000/svg")
+      .attr("xmlns:xlink", "http://www.w3.org/1999/xlink");
   }
 
   draw() {
     this.drawn = true;
-    // Draw a line
-    let circle = this.container.append("line")
-      .attr("x1", 5)
-      .attr("y1", 5)
-      .attr("x2", 500)
-      .attr("y2", 500)
-      .attr("stroke-width", 2)
-      .attr("stroke", "black");
+
+    card({
+      container: this.container,
+      x: 50,
+      y: 50,
+      width: 180,
+      height: 240,
+      topText: "Potential Cases Reported",
+      numberText: "80%",
+      bottomText: "Potential Cases: 34\nTotal Reports: 99",
+      curveNumbers: {
+        'blue': 50,
+        'black': 20
+      }
+
+    });
+
   }
 
   getSvg() {
