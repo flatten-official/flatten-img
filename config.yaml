@@ -1,0 +1,5 @@
+project_id_master: flatten-271620
+project_id_staging: flatten-staging-271921
+staging:
+  bucket: flatten-img-staging
+  bucket_path: fsa/
